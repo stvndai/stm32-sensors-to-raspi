@@ -1,0 +1,20 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Sensor Dashboard</title>
+  </head>
+  <body>
+    <h1>Live readings</h1>
+    <p>Temp: <span id="temp">--</span> °C</p>
+    <p>Humidity: <span id="hum">--</span> %</p>
+    <script>
+      const ws = new WebSocket(`ws://${location.host}/ws`);
+      ws.onmessage = (event) => {
+        const data = JSON.parse(event.data);
+        document.getElementById("temp").textContent =
+          data.temperature.toFixed(1);
+        document.getElementById("hum").textContent = data.humidity.toFixed(1);
+      };
+    </script>
+  </body>
+</html>
